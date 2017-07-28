@@ -4,6 +4,7 @@ const dequeue = require('./dequeue.js')
 const data = new dequeue.Dequeue();
 // adds and removes items to front and back of queue
 data.addFirst(5);
+console.log(data.removeFirst());
 data.addFirst(10);
 data.addLast(13);
 console.log(data.removeFirst()); // 10

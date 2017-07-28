@@ -1,50 +1,51 @@
-/* A randomized queue is similar to a stack or queue, except that the item removed is chosen uniformly at random from items in the data structure.
-
-public class RandomizedQueue<Item> implements Iterable<Item> {
-   public RandomizedQueue()                 // construct an empty randomized queue
-   public boolean isEmpty()                 // is the queue empty?
-   public int size()                        // return the number of items on the queue
-   public void enqueue(Item item)           // add the item
-   public Item dequeue()                    // remove and return a random item
-   public Item sample()                     // return (but do not remove) a random item
-   public Iterator<Item> iterator()         // return an independent iterator over items in random order
-   public static void main(String[] args)   // unit testing (optional)
-}
-Corner cases.
-The order of two or more iterators to the same randomized queue must be mutually independent; each iterator must maintain its own random order.
-Throw a java.lang.IllegalArgumentException if the client attempts to add a null item;
-throw a java.util.NoSuchElementException if the client attempts to sample or dequeue an item from an empty randomized queue;throw a java.lang.UnsupportedOperationException if the client calls the remove() method in the iterator;
-throw a java.util.NoSuchElementException if the client calls the next() method in the iterator and there are no more items to return.
-
-Performance requirements. Your randomized queue implementation must support each randomized queue operation (besides creating an iterator) in constant amortized time. That is, any sequence of m randomized queue operations (starting from an empty queue) should take at most cm steps in the worst case, for some constant c. A randomized queue containing n items must use at most 48n + 192 bytes of memory. Additionally, your iterator implementation must support operations next() and hasNext() in constant worst-case time; and construction in linear time; you may (and will need to) use a linear amount of extra memory per iterator.
-
-*/
-
 class RandomizedQueue {
   constructor() {
     this.queue = []
+    this.counter = 0
   }
   isEmpty() {
-    return !this.queue
+    return this.counter === 0
   }
   size() {
-    return this.queue.length
+    return this.counter
   }
   enqueue(item) {
     if (!item) throw new Error('Whoops! Looks like this item is null, please enter a valid item type.')
+    this.queue.push(item)
+    this.counter++
   }
   dequeue() {
     if (this.isEmpty()) throw new Error('Queue is empty!')
+    const deletedItem = this.queue[Math.floor(Math.random() * this.counter)]
+    const lastIndex = this.counter - 1
+    const deletedIndex = this.queue.indexOf(deletedItem)
+    this.queue[deletedIndex] = this.queue[lastIndex]
+    this.queue[lastIndex] = deletedItem
+    this.counter--
+    return this.queue.pop();
   }
   sample() {
     if (this.isEmpty()) throw new Error('Queue is empty!')
+    return this.queue[Math.floor(Math.random() * this.counter)]
   }
 
 }
 
-class Iterator {
-  return ({
-    next: function () {},
-    hasNext: function() {}
-  })
+function Iterator(object) {
+  const copy = object.queue.slice()
+  return {
+    remove: () => {
+      throw new Error('Cannot remove items in the iterator!')
+    },
+    next: () => {
+      if (copy.length === 0) throw new Error('There are no more items to return')
+      const deletedItem = copy[Math.floor(Math.random() * copy.length)]
+      const lastIndex = copy.length - 1
+      const deletedIndex = copy.indexOf(deletedItem)
+      copy[deletedIndex] = copy[lastIndex]
+      copy[lastIndex] = deletedItem
+      return copy.pop();
+    },
+    hasNext: () => copy.length !== 0,
+  }
 }
