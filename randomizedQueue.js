@@ -1,4 +1,4 @@
-class RandomizedQueue {
+module.exports = class RandomizedQueue {
   constructor() {
     this.queue = []
     this.counter = 0

@@ -54,7 +54,6 @@ class Dequeue {
     if (this.isEmpty()) throw new Error('Queue is empty')
     const removed = this.first
     this.first = removed.next
-    this.first.prev = null;
     this.length--
     return removed.value
   }

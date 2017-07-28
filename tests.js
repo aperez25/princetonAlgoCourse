@@ -1,6 +1,8 @@
 const dequeue = require('./dequeue.js')
-
+const Queue = require('./randomizedQueue.js')
+const Permutation = require('./permutation.js')
 /* DEQUEUE TESTING */
+console.log('DEQUEUE TESTING')
 const data = new dequeue.Dequeue();
 // adds and removes items to front and back of queue
 data.addFirst(5);
@@ -25,3 +27,8 @@ while (items.hasNext()) {
   console.log(items.next())
 }
 // 30 9 5 13 12
+
+/* PERMUTATION TESTING */
+console.log('PERMUTATION TESTS:')
+var test = Permutation(3)
+test([1, 2, 3, 65, 87, 23, 45, 78, 132])
